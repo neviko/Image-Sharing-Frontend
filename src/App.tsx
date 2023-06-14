@@ -17,8 +17,8 @@ const App = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [errors, setErrors] = useState<ErrorMessages[]>([]);
 
-  const handleImageChange = (e: any) => {
-    setImage(e.target.files[0]);
+  const handleImageChange = (image: any) => {
+    setImage(image);
   };
 
   const handleDateChange = (
@@ -31,13 +31,8 @@ const App = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    setLoading(true);
     setShareableLink(undefined);
     setErrors([]);
-    // TODO
-    // 1 - trim on file name
-    // 2 - input validation on past date
-
     if (!expirationDate) {
       setErrors((errors) => [...errors, ErrorMessages.EmptyDate]);
       return;
@@ -57,6 +52,7 @@ const App = () => {
     const formData = new FormData();
     formData.append("myImage", image as any);
     try {
+      setLoading(true);
       const { data } = await http({
         data: formData,
         url: "/v1/file",
@@ -76,19 +72,14 @@ const App = () => {
 
   return (
     <div className="App">
-      <hr></hr>
-      <h4>Image Upload</h4>
+      <h2 style={styles.header}>Image Sharing</h2>
       <form onSubmit={handleSubmit} style={styles.formStyle}>
-        {/* <FileUploader
+        <FileUploader
           handleChange={handleImageChange}
           name="file"
           types={fileTypes}
-        /> */}
-        <input
-          type="file"
-          accept="image/*"
-          onChange={handleImageChange}
-        ></input>
+          multiple={false}
+        />
 
         <TextField
           label="Expiration Date"
@@ -119,6 +110,9 @@ const App = () => {
 };
 
 const styles: { [key: string]: React.CSSProperties } = {
+  header: {
+    textAlign: "center",
+  },
   formStyle: {
     margin: "30px",
     padding: "30px",
