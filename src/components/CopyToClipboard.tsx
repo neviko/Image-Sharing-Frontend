@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "@mui/material";
+import { Button, TextField } from "@mui/material";
 
 interface CopyToClipboardProps {
   text: string;
@@ -11,8 +11,24 @@ export const CopyToClipboard: React.FC<CopyToClipboardProps> = ({ text }) => {
   };
   return (
     <div style={styles.container}>
-      <input style={styles.input} value={text}></input>
-      <Button onClick={handleCopyClick} variant="contained" color="primary">
+      <TextField
+        label="Shareable Link"
+        name="sharable"
+        value={text}
+        onChange={handleCopyClick}
+        margin="normal"
+        fullWidth
+        type="text"
+        InputLabelProps={{ shrink: true }}
+        style={{ width: "70%" }}
+      />
+      <Button
+        onClick={handleCopyClick}
+        variant="contained"
+        color="primary"
+        size="large"
+        style={{ marginLeft: "15px" }}
+      >
         Copy
       </Button>
     </div>
@@ -20,9 +36,8 @@ export const CopyToClipboard: React.FC<CopyToClipboardProps> = ({ text }) => {
 };
 
 const styles: { [key: string]: React.CSSProperties } = {
-  container: {},
+  container: { display: "flex", width: "100%", alignItems: "center" },
   input: {
-    width: "70%",
     height: "30px",
   },
 };
