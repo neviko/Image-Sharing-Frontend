@@ -1,9 +1,0 @@
-.imageBox {
-  margin: 20px;
-  width: 220px;
-  height: 220px;
-  background-color: lightgray;
-  position: relative;
-  left: 50%;
-  transform: translateX(-50%);
-}
